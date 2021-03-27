@@ -118,7 +118,8 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
           #curcount+= labels.shape[0]
 
           #TODO: collect scores, labels, filenames
-          fnames.append(data['filename'])
+          for name in data['filename']:
+            fnames.append(name)
           predictions = torch.round(outputs)
 
           for clIndex in range(numcl):
@@ -145,7 +146,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
             temp_pred = temp_pred.astype(int)
 
-            concat_labels[c] = concat_labels[c].astype(int) #some scary stuff I didn't have time to debug happened, so ended up doing this
+            concat_labels[c] = concat_labels[c].astype(int) #some scary stuff I didn't have time to debug happened to my labels in this array, so ended up doing this
 
             for i in range(len(concat_labels[c])):
                 if concat_labels[c][i] != 1 and concat_labels[c][i] != 0:
@@ -157,7 +158,6 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
             precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred, zero_division=0)
             recall = sklearn.metrics.recall_score(y_true=concat_labels[c], y_pred=temp_pred)
-            print("made it through")
             precisions.append(precision)
             recalls.append(recall)
         precisions.append(1)
