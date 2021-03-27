@@ -33,7 +33,7 @@ class dataset_voc(Dataset):
           self.imgfilenames, self.labels = self.DataGetter.trainingSettWithLabels()
       elif trvaltest == 1:
           self.imgfilenames, self.labels = self.DataGetter.valSettWithLabels()
-      elif tr      scheduler.step()valtest == 2:
+      elif trvaltest == 2:
           self.imgfilenames, self.labels = self.DataGetter.testSettWithLabels()
       else:
           print("Invalid dataset classification in second positional argument, please try: 0, 1 or 2 if test data is availible")
