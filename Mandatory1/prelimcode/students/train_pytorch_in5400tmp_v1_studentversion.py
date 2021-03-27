@@ -77,8 +77,10 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
           optimizer.step()
 
     for loss in losses:
-      loss.detach().cpu().numpy()
-    return np.mean(losses)
+      loss = torch.mean(loss).detach().cpu().numpy()
+      
+    print(losses)
+    return np.mean(np.array(losses))
 
 def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
