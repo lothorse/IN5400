@@ -208,22 +208,22 @@ def traineval2_model_nocv(dataloader_train, dataloader_test ,  model ,  criterio
       #TODO save your scores
       with open("file_names.txt", "w") as nameFile:
           for name in fnames:
-              nameFile.write(name)
+              nameFile.write(name+"\n")
 
       with open("ground_truth.txt", "w") as file:
           concat_labels = np.array(concat_labels)
           for i in range(concat_labels.shape[1]):
-              file.write(np.array2string(concat_labels[:,i], separator=','))
+              file.write(np.array2string(concat_labels[:,i], separator=',')+"\n")
 
       with open("prediction_scores.txt", "w") as file:
           concat_pred = np.array(concat_pred)
           for i in range(concat_pred.shape[1]):
-              file.write(np.array2string(concat_pred[:,i], separator=','))
+              file.write(np.array2string(concat_pred[:,i], separator=',')+"\n")
 
       with open("predicted_labels.txt", "w") as file:
           concat_pred = np.array(concat_pred)
           for i in range(concat_pred.shape[1]):
-              file.write(np.array2string(concat_pred[:,i], separator=','))
+              file.write(np.array2string(concat_pred[:,i], separator=',')+"\n")
 
 
   return best_epoch, best_measure, bestweights, trainlosses, testlosses, testperfs
@@ -247,10 +247,10 @@ def runstuff():
   config = dict()
 
   config['use_gpu'] = True #True #TODO change this to True for training on the cluster, eh
-  config['lr']= 0.005 #0.01
+  config['lr']= 0.02 #0.005
   config['batchsize_train'] = 16
   config['batchsize_val'] = 64
-  config['maxnumepochs'] = 175 #70 35
+  config['maxnumepochs'] = 105 #140 70 35
 
   config['scheduler_stepsize']=10
   config['scheduler_factor']=0.3
