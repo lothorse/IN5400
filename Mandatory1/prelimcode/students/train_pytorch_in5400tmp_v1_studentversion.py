@@ -129,7 +129,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                   concat_labels[clIndex][batch_idx+i] = labels[i][clIndex]
 
     #calculating mean average precision
-    thresholds = np.arange(start=0.3, stop=0.7, step=0.05) #thresholds evenly spaced around 0.5
+    thresholds = np.arange(start=0.2, stop=0.7, step=0.05)
     for c in range(numcl):
         precisions = []
         recalls = []
@@ -247,10 +247,10 @@ def runstuff():
   config = dict()
 
   config['use_gpu'] = True #True #TODO change this to True for training on the cluster, eh
-  config['lr']=0.005
+  config['lr']= 0.01 #0.005
   config['batchsize_train'] = 16
   config['batchsize_val'] = 64
-  config['maxnumepochs'] = 35
+  config['maxnumepochs'] = 70 #35
 
   config['scheduler_stepsize']=10
   config['scheduler_factor']=0.3
