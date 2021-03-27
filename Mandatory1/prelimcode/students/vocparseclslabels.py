@@ -9,7 +9,7 @@ class PascalVOC:
     """
     def __init__(self, root_dir):
         """
-        Summary: 
+        Summary:
             Init the class with root dir
         Args:
             root_dir (string): path to your voc dataset
@@ -24,7 +24,7 @@ class PascalVOC:
 
     def list_image_sets(self):
         """
-        Summary: 
+        Summary:
             List all the image sets from Pascal VOC. Don't bother computing
             this on the fly, just remember it. It's faster.
         """
@@ -38,7 +38,7 @@ class PascalVOC:
 
     def _imgs_from_category(self, cat_name, dataset):
         """
-        Summary: 
+        Summary:
         Args:
             cat_name (string): Category name as a string (from list_image_sets())
             dataset (string): "train", "val", "train_val", or "test" (if available)
@@ -55,7 +55,7 @@ class PascalVOC:
 
     def imgs_from_category_as_list(self, cat_name, dataset):
         """
-        Summary: 
+        Summary:
             Get a list of filenames for images in a particular category
             as a list rather than a pandas dataframe.
         Args:
@@ -68,6 +68,7 @@ class PascalVOC:
         df = df[df['true'] == 1]
         return df['filename'].values
 
+
 if __name__=='__main__':
 
     pv=PascalVOC('./data/VOCdevkit/VOC2012/')
@@ -76,4 +77,3 @@ if __name__=='__main__':
     dataset='val'
     ls=pv.imgs_from_category_as_list(cat_name, dataset)
     print(len(ls),ls[0])
-

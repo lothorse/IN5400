@@ -1019,7 +1019,7 @@ def parsesynsetwords(filen):
         descr=''
         for i in range(1,len(z)):
           descr=descr+' '+z[i]
-        
+
         ct+=1
         indicestosynsets[ct]=z[0]
         synsetstoindices[z[0]]=ct
@@ -1031,18 +1031,18 @@ def test_parsesyn():
   filen='/home/binder/entwurf6/codes/tfplay/ai/imagenetdata/synset_words.txt'
   indicestosynsets,synsetstoindices,synsetstoclassdescr=parsesynsetwords(filen)
   clsdict=get_classes()
-  
+
   '''
   for keyval in indicestosynsets.items():
     print(type(keyval[0]),keyval[0],keyval[1])
   '''
-  
-  
-  
+
+
+
   for i in range(1000):
     n1=synsetstoclassdescr[indicestosynsets[i]]
     n2=clsdict[i]
-    
+
     if(n1!=n2):
       print (i)
       print ('n1', n1,'n2:',n2 )
@@ -1052,7 +1052,7 @@ def testparse():
 
   tree = ET.parse(nm)
   root = tree.getroot()
-  
+
   '''
   for child in root:
     #print child.tag,'|'
@@ -1060,42 +1060,42 @@ def testparse():
       for el in child:
         if el.tag=='name':
           print el.text
-  '''        
+  '''
   for obj in root.findall('object'):
      for name in obj.findall('name'):
        print (name.text)
-  #for         
-  
-def parseclasslabel(nm,synsetstoindices):  
+  #for
+
+def parseclasslabel(nm,synsetstoindices):
   tree = ET.parse(nm)
   root = tree.getroot()
 
   lbset=set()
-  
+
   for obj in root.findall('object'):
      for name in obj.findall('name'):
        #print name.text
        ind=synsetstoindices[name.text]
        firstname=name.text
        lbset.add(ind)
-       
+
   if len(lbset)!=1:
     print     ('ERR: len(lbset)!=1',  len(lbset))
     exit()
-    
+
   for s in lbset:
     label=  s
   return label,firstname
-  
-  
+
+
 def test_parseclasslabel():
   filen='/home/binder/entwurf6/codes/tfplay/ai/imagenetdata/synset_words.txt'
 
-  
+
   nm='/home/binder/entwurf6/codes/tfplay/ai/imagenetdata/val/ILSVRC2012_val_00049999.xml'
-  
+
   indicestosynsets,synsetstoindices,synsetstoclassdescr=parsesynsetwords(filen)
-  
+
   label,firstname=parseclasslabel(nm,synsetstoindices)
-  
+
   print(label,firstname,  synsetstoclassdescr[indicestosynsets[label]] )
