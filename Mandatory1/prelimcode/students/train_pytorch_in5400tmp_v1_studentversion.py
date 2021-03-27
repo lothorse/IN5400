@@ -79,7 +79,6 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
     for i in range(len(losses)):
       losses[i] = torch.mean(losses[i]).detach().cpu().item()
 
-    print(losses)
     return np.mean(np.array(losses))
 
 def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
@@ -137,11 +136,17 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         for thr in thresholds:
 
             temp_pred = concat_pred[c]
+            print(temp_pred[:2])
+
             for i in range(len(temp_pred)):
                 if temp_pred[i] >= thr:
                     temp_pred[i] = 1
                 else:
                     temp_pred[i] = 0
+
+            print(temp_pred[:12])
+
+            print(concat_labels[c][:12])
 
             precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred)
             recall = aklearn.metrics.recall_core(y_true=concat_labels[c], y_pred=temp_pred)
