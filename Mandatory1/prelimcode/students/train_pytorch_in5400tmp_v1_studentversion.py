@@ -136,7 +136,6 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         for thr in thresholds:
 
             temp_pred = concat_pred[c]
-            print(temp_pred[:2])
 
             for i in range(len(temp_pred)):
                 if temp_pred[i] >= thr:
@@ -144,9 +143,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                 else:
                     temp_pred[i] = 0
 
-            print(temp_pred[:24])
-
-            print(concat_labels[c][:24])
+            temp_pred = numpy.ones((len(temp_pred)))
 
             precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred)
             recall = aklearn.metrics.recall_core(y_true=concat_labels[c], y_pred=temp_pred)
