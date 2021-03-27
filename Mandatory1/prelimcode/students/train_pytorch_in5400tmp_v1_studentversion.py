@@ -145,11 +145,14 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
             temp_pred = temp_pred.astype(int)
 
-            concat_labels[c] = concat_labels[c].astype(int)
+            concat_labels[c] = concat_labels[c].astype(int) #some scary stuff I didn't have time to debug happened, so ended up doing this
 
             for i in range(len(concat_labels[c])):
                 if concat_labels[c][i] != 1 and concat_labels[c][i] != 0:
-                    print("WTF! {}".format(concat_labels[c][i]))
+                    if concat_labels[c][i] >= 0.5:
+                        concat_labels[c][i] = 1
+                    else:
+                        concat_labels = 0
 
 
             precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred)
