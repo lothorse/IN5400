@@ -152,10 +152,10 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                     if concat_labels[c][i] >= 0.5:
                         concat_labels[c][i] = 1
                     else:
-                        concat_labels = 0
+                        concat_labels[c][i] = 0
 
 
-            precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred)
+            precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred, zero_division=0)
             recall = sklearn.metrics.recall_score(y_true=concat_labels[c], y_pred=temp_pred)
             print("made it through")
             precisions.append(precision)
