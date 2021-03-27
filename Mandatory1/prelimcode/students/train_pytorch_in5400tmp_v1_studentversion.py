@@ -61,13 +61,13 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
 
     losses = []
     for batch_idx, data in enumerate(trainloader):
-      #TODO
-      inputs = data['image'].to(device)
-      labels = data['label'].to(device)
-      optimizer.zero_grad()
+        #TODO
+        inputs = data['image'].to(device)
+        labels = data['label'].to(device)
+        optimizer.zero_grad()
 
-      #forward
-      with torch.set_grad_enabled(True):
+        #forward
+        with torch.set_grad_enabled(True):
           outputs = model(inputs)
           loss = criterion(outputs, labels)
           losses.append(loss)
@@ -76,7 +76,9 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
           loss.backward()
           optimizer.step()
 
-    return np.mean(losses.numpy())
+    for loss in losses:
+      loss = loss.numpy()
+    return np.mean(np.array(losses))
 
 def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
