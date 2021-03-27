@@ -76,9 +76,9 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
           loss.backward()
           optimizer.step()
 
-    for loss in losses:
-      loss = torch.mean(loss).detach().cpu().numpy()
-      
+    for i in range len(losses):
+      losses[i] = torch.mean(losses[i]).detach().cpu().numpy()
+
     print(losses)
     return np.mean(np.array(losses))
 
