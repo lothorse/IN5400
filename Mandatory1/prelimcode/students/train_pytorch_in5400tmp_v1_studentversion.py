@@ -144,6 +144,11 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                     temp_pred[i] = 0
 
             temp_pred = temp_pred.astype(int)
+
+            for i in range len(concat_labels[c]):
+                if concat_labels[c][i] != 1 and concat_labels[c][i] != 0:
+                    print("WTF! {}".format(concat_labels[c][i]))
+                    
             concat_labels[c] = concat_labels[c].astype(int)
 
 
