@@ -285,7 +285,7 @@ def runstuff():
 
   #model
   #TODO
-  model = torch.hub.load('pytorch/vision:v0.9.0', 'resnet18', pretrained=True)
+  model = models.resnet18(pretrained=True)
   #overwrite last linear layer
   num_ftrs = model.fc.in_features
   model.fc = nn.Linear(num_ftrs, 20)
