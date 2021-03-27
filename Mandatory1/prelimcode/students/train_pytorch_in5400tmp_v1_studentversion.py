@@ -105,10 +105,6 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
           outputs = model(inputs)
 
           labels = data['label']
-          for label in labels:
-              for i in range(len(label)):
-                  if label[i] != 1 and label[i] != 0:
-                      print("WTF! {}".format(label[i]))
 
           loss = criterion(outputs, labels.to(device) )
           losses.append(loss.item())
@@ -148,7 +144,12 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                     temp_pred[i] = 0
 
             temp_pred = temp_pred.astype(int)
+
             concat_labels[c] = concat_labels[c].astype(int)
+
+            for i in range(len(concat_labels[c])):
+                if concat_labels[c][i] != 1 and concat_labels[c][i] != 0:
+                    print("WTF! {}".format(concat_labels[c][i]))
 
 
             precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred)
