@@ -247,10 +247,10 @@ def runstuff():
   config = dict()
 
   config['use_gpu'] = True #True #TODO change this to True for training on the cluster, eh
-  config['lr']= 0.01 #0.005
+  config['lr']= 0.005 #0.01
   config['batchsize_train'] = 16
   config['batchsize_val'] = 64
-  config['maxnumepochs'] = 70 #35
+  config['maxnumepochs'] = 175 #70 35
 
   config['scheduler_stepsize']=10
   config['scheduler_factor']=0.3
@@ -325,6 +325,9 @@ def runstuff():
 
   best_epoch, best_measure, bestweights, trainlosses, testlosses, testperfs = traineval2_model_nocv(dataloaders['train'], dataloaders['val'] ,  model ,  lossfct, someoptimizer, somelr_scheduler, num_epochs= config['maxnumepochs'], device = device , numcl = config['numcl'] )
 
+  print("Best epoch: {}\nBest measure: {}".format(best_epoch, best_measure))
+
+  torch.save(bestweights, "best_weights.pt")
 
 
 ###########
