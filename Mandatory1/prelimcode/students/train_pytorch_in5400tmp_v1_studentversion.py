@@ -76,7 +76,7 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
           loss.backward()
           optimizer.step()
 
-    return np.mean(np.array(losses))
+    return np.mean(losses.numpy())
 
 def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
