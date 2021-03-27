@@ -143,7 +143,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                 else:
                     temp_pred[i] = 0
 
-            temp_pred = numpy.ones((len(temp_pred)))
+            temp_pred = np.ones((len(temp_pred)))
 
             precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred)
             recall = aklearn.metrics.recall_core(y_true=concat_labels[c], y_pred=temp_pred)
