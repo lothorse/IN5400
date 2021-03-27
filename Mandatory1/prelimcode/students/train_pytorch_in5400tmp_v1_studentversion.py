@@ -105,6 +105,10 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
           outputs = model(inputs)
 
           labels = data['label']
+          for label in labels:
+              for i in range(len(label)):
+                  if label[i] != 1 and label[i] != 0:
+                      print("WTF! {}".format(label[i]))
 
           loss = criterion(outputs, labels.to(device) )
           losses.append(loss.item())
