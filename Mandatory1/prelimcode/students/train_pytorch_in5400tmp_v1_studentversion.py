@@ -229,7 +229,7 @@ def runstuff():
 
   config = dict()
 
-  config['use_gpu'] = False #True #TODO change this to True for training on the cluster, eh
+  config['use_gpu'] = True #True #TODO change this to True for training on the cluster, eh
   config['lr']=0.005
   config['batchsize_train'] = 16
   config['batchsize_val'] = 64
