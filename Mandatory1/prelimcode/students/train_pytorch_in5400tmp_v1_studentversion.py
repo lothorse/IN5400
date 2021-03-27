@@ -157,7 +157,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         precision = np.array(precisions)
         recalls = np.array(recalls)
 
-        avgprecs[c]= numpy.sum((recalls[:-1] - recalls[1:]) * precisions[:-1])
+        avgprecs[c]= np.sum((recalls[:-1] - recalls[1:]) * precisions[:-1])
 
     return avgprecs, np.mean(losses), concat_labels, concat_pred, fnames
 
