@@ -133,7 +133,6 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
     for c in range(numcl):
         precisions = []
         recalls = []
-        print(concat_pred[c])
         for thr in thresholds:
             temp_pred = np.zeros(len(concat_pred[c]))
             temp_pred[:] = concat_pred[c][:]
@@ -165,7 +164,6 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         recalls = np.array(recalls)
 
         avgprecs[c]= np.sum((recalls[:-1] - recalls[1:]) * precisions[:-1])
-        print(concat_pred[c])
     return avgprecs, np.mean(losses), concat_labels, concat_pred, fnames
 
 
