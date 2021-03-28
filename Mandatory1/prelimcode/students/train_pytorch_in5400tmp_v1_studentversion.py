@@ -135,9 +135,8 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         recalls = []
 
         for thr in thresholds:
-
+            print(concat_pred[c])
             temp_pred = concat_pred[c]
-
             for i in range(len(temp_pred)):
                 if temp_pred[i] >= thr:
                     temp_pred[i] = 1
@@ -145,6 +144,9 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                     temp_pred[i] = 0
 
             temp_pred = temp_pred.astype(int)
+
+            print(temp_pred)
+            print(concat_pred[c])
 
             concat_labels[c] = concat_labels[c].astype(int) #some scary stuff I didn't have time to debug happened to my labels in this array, so ended up doing this
 
