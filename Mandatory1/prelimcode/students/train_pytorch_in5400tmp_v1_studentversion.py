@@ -133,9 +133,8 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
     for c in range(numcl):
         precisions = []
         recalls = []
-
+        print(concat_pred[c])
         for thr in thresholds:
-            print(concat_pred[c])
             temp_pred = concat_pred[c]
             for i in range(len(temp_pred)):
                 if temp_pred[i] >= thr:
@@ -144,9 +143,6 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
                     temp_pred[i] = 0
 
             temp_pred = temp_pred.astype(int)
-
-            print(temp_pred)
-            print(concat_pred[c])
 
             concat_labels[c] = concat_labels[c].astype(int) #some scary stuff I didn't have time to debug happened to my labels in this array, so ended up doing this
 
@@ -168,7 +164,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         recalls = np.array(recalls)
 
         avgprecs[c]= np.sum((recalls[:-1] - recalls[1:]) * precisions[:-1])
-
+        print(concat_pred[c])
     return avgprecs, np.mean(losses), concat_labels, concat_pred, fnames
 
 
