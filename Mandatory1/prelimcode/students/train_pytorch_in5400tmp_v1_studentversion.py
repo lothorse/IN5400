@@ -135,7 +135,8 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         recalls = []
         print(concat_pred[c])
         for thr in thresholds:
-            temp_pred = concat_pred[c]
+            temp_pred = np.zeros(len(concat_pred[c]))
+            temp_pred[:] = concat_pred[c][:]
             for i in range(len(temp_pred)):
                 if temp_pred[i] >= thr:
                     temp_pred[i] = 1
