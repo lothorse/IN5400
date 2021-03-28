@@ -207,20 +207,14 @@ def traineval2_model_nocv(dataloader_train, dataloader_test ,  model ,  criterio
           for name in fnames:
               nameFile.write(name+"\n")
 
-      with open("ground_truth.txt", "w") as file:
-          concat_labels = np.array(concat_labels)
-          for i in range(concat_labels.shape[1]):
-              file.write(np.array2string(concat_labels[:,i], separator=',')+"\n")
+      concat_labels = np.array(concat_labels)
+      np.save("ground_truth.npy", np.transpose(concat_labels))
 
-      with open("prediction_scores.txt", "w") as file:
-          concat_pred = np.array(concat_pred)
-          for i in range(concat_pred.shape[1]):
-              file.write(np.array2string(concat_pred[:,i], separator=',')+"\n")
+      concat_pred = np.array(concat_pred)
+      np.save("prediction_scores.npy", np.transpose(concat_pred))
 
-      with open("predicted_labels.txt", "w") as file:
-          concat_pred = np.array(concat_pred)
-          for i in range(concat_pred.shape[1]):
-              file.write(np.array2string(concat_pred[:,i], separator=',')+"\n")
+      labels_pred = np.round(concat_pred)
+      np.save("predicted_labels.npy", np.transpose(labels_pred))
 
 
   return best_epoch, best_measure, bestweights, trainlosses, testlosses, testperfs
