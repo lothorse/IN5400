@@ -23,6 +23,8 @@ from vocDataGetter import DataGetter
 
 from typing import Callable, Optional
 
+torch.manual_seed(420)
+np.random.seed(420)
 
 class dataset_voc(Dataset):
   def __init__(self, root_dir, trvaltest, transform=None):
@@ -110,7 +112,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
           losses.append(loss.item())
 
           #this was an accuracy computation
-          #cpuout= outputs.to('cpu')
+          cpuout= outputs.to('cpu')
           #_, preds = torch.max(cpuout, 1)
           #labels = labels.float()
           #corrects = torch.sum(preds == labels.data)
@@ -123,47 +125,13 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
           predictions = torch.round(outputs)
 
           for clIndex in range(numcl):
-              for i in range(inputs.shape[0]): #should be batch size
-                  concat_pred[clIndex][batch_idx+i] = outputs[i][clIndex]
-                  #concat_labels[clIndex][batch_idx+i] = predictions[i][clIndex] was not sure wich labels you wanted
-                  concat_labels[clIndex][batch_idx+i] = labels[i][clIndex]
+              concat_pred[clIndex] = np.append(concat_pred[numcl], cpuout.numpy()[:,clIndex])
+              concat_labels[clIndex] = np.append(concat_labels[numcl], labels.numpy()[:,clIndex])
 
     #calculating mean average precision
-    thresholds = np.arange(start=0.2, stop=0.7, step=0.05)
     for c in range(numcl):
-        precisions = []
-        recalls = []
-        for thr in thresholds:
-            temp_pred = np.zeros(len(concat_pred[c]))
-            temp_pred[:] = concat_pred[c][:]
-            for i in range(len(temp_pred)):
-                if temp_pred[i] >= thr:
-                    temp_pred[i] = 1
-                else:
-                    temp_pred[i] = 0
+        avgprecs[c]= sklearn.metrics.average_precision_score(concat_labels[c], concat_pred[c], pos_label=1)
 
-            temp_pred = temp_pred.astype(int)
-
-            concat_labels[c] = concat_labels[c].astype(int) #some scary stuff I didn't have time to debug happened to my labels in this array, so ended up doing this
-
-            for i in range(len(concat_labels[c])):
-                if concat_labels[c][i] != 1 and concat_labels[c][i] != 0:
-                    if concat_labels[c][i] >= 0.5:
-                        concat_labels[c][i] = 1
-                    else:
-                        concat_labels[c][i] = 0
-
-
-            precision = sklearn.metrics.precision_score(y_true=concat_labels[c], y_pred=temp_pred, zero_division=0)
-            recall = sklearn.metrics.recall_score(y_true=concat_labels[c], y_pred=temp_pred)
-            precisions.append(precision)
-            recalls.append(recall)
-        precisions.append(1)
-        recalls.append(0)
-        precision = np.array(precisions)
-        recalls = np.array(recalls)
-
-        avgprecs[c]= np.sum((recalls[:-1] - recalls[1:]) * precisions[:-1])
     return avgprecs, np.mean(losses), concat_labels, concat_pred, fnames
 
 
