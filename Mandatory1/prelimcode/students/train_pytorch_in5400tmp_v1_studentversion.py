@@ -82,7 +82,7 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
       losses[i] = torch.mean(losses[i]).detach().cpu().item()
 
     return np.mean(np.array(losses))
-
+"""
 def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
     model.eval()
@@ -134,6 +134,48 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
     return avgprecs, np.mean(losses), concat_labels, concat_pred, fnames
 
+"""
+def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
+    print("eval start")
+    model.eval()
+
+    curcount = 0
+    accuracy = 0
+
+    concat_pred=[np.empty(shape=(0)) for _ in range(numcl)] #prediction scores for each class. each numpy array is a list of scores. one score per image
+    concat_labels=[np.empty(shape=(0)) for _ in range(numcl)] #labels scores for each class. each numpy array is a list of labels. one label per image
+    avgprecs=np.zeros(numcl) #average precision for each class
+    fnames = [] #filenames as they come out of the dataloader
+
+    with torch.no_grad():
+      losses = []
+      for batch_idx, data in enumerate(dataloader):
+
+
+          if (batch_idx%100==0) and (batch_idx>=100):
+            print('at val batchindex: ',batch_idx)
+
+          inputs = data['image'].to(device)
+          outputs = model(inputs)
+
+          labels = data['label']
+
+          loss = criterion(outputs, labels.to(device) )
+          losses.append(loss.item())
+          #this was an accuracy computation
+          cpuout= outputs.to('cpu')
+
+
+          for c in range(numcl):
+              concat_pred[c]=np.append(concat_pred[c],cpuout.numpy()[:,c])
+              concat_labels[c]=np.append(concat_labels[c],labels.numpy()[:,c])
+
+          fnames.append(data['filename'])
+
+
+    for c in range(numcl):
+        avgprecs[c]=sklearn.metrics.average_precision_score(concat_labels[c],concat_pred[c],pos_label=1)
+    return avgprecs, np.mean(losses), concat_labels, concat_pred, fnames
 
 def traineval2_model_nocv(dataloader_train, dataloader_test ,  model ,  criterion, optimizer, scheduler, num_epochs, device, numcl):
 
