@@ -82,7 +82,7 @@ def train_epoch(model,  trainloader,  criterion, device, optimizer ):
       losses[i] = torch.mean(losses[i]).detach().cpu().item()
 
     return np.mean(np.array(losses))
-"""
+
 def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
 
     model.eval()
@@ -177,6 +177,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
         avgprecs[c]=sklearn.metrics.average_precision_score(concat_labels[c],concat_pred[c],pos_label=1)
     return avgprecs, np.mean(losses), concat_labels, concat_pred, fnames
 
+"""
 def traineval2_model_nocv(dataloader_train, dataloader_test ,  model ,  criterion, optimizer, scheduler, num_epochs, device, numcl):
 
   best_measure = 0
