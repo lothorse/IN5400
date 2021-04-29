@@ -125,6 +125,7 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
           predictions = torch.round(outputs)
 
           for clIndex in range(numcl):
+              print(clIndex)
               concat_pred[clIndex] = np.append(concat_pred[numcl], cpuout.numpy()[:,clIndex])
               concat_labels[clIndex] = np.append(concat_labels[numcl], labels.numpy()[:,clIndex])
 
