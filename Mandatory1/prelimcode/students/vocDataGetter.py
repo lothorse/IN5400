@@ -4,6 +4,9 @@ import os
 import numpy as np
 import random
 
+np.random.seed(420)
+random.seed(420)
+
 class DataGetter(PascalVOC):
 
     def trainingSettWithLabels(self, shuffle=True):
