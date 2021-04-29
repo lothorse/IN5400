@@ -123,11 +123,15 @@ def evaluate_meanavgprecision(model, dataloader, criterion, device, numcl):
           for name in data['filename']:
             fnames.append(name)
           predictions = torch.round(outputs)
-
+          """
           for clIndex in range(numcl):
               print(clIndex)
               concat_pred[clIndex] = np.append(concat_pred[numcl], cpuout.numpy()[:,clIndex])
               concat_labels[clIndex] = np.append(concat_labels[numcl], labels.numpy()[:,clIndex])
+          """
+          for c in range(numcl):
+              concat_pred[c]=np.append(concat_pred[c],cpuout.numpy()[:,c])
+              concat_labels[c]=np.append(concat_labels[c],labels.numpy()[:,c])
 
     #calculating mean average precision
     for c in range(numcl):
