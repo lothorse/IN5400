@@ -272,7 +272,7 @@ def runstuff():
 
   #TODO
   # Observe that all parameters are being optimized
-  someoptimizer = torch.optim.SGD(model.parameters(), lr=config['lr'])
+  someoptimizer = torch.optim.SGD(model.parameters(), lr=config['lr'], momentum=0.9)
 
   # Decay LR by a factor of 0.3 every X epochs
   #TODO
