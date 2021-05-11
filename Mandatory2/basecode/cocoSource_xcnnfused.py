@@ -137,6 +137,8 @@ class RNN_onelayer_simplified(nn.Module):
             # and input at each layer the correct input ,
             # the input at higher layers will be the hidden state from the layer below
             #TODO
+            print(xTokens.shape, baseimgfeat.shape)
+            
             lvl0input = torch.cat((xTokens, baseimgfeat), 1) # what
             lvl0input = torch.unsqueeze(lvl0input.cpu(), 0)
             print(lvl0input.shape)
