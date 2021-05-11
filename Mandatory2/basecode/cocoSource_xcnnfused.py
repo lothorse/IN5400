@@ -131,7 +131,6 @@ class RNN_onelayer_simplified(nn.Module):
         current_state = initial_hidden_state
         for kk in range(seqLen):
             updatedstate = torch.zeros_like(current_state)
-            print(updatedstate.shape)
 
             # this is for a one-layer RNN
             # in a 2 layer rnn you have to iterate here through the 2 layers
@@ -140,7 +139,7 @@ class RNN_onelayer_simplified(nn.Module):
             #TODO
             lvl0input = torch.cat((baseimgfeat, xTokens), 1) # what
             lvl0input = lvl0input.cpu()
-            torch.Tensor([lvl0input])
+            torch.Tensor(lvl0input)
             print(lvl0input.shape)
             #note that      current_state has 3 dims ( ...len(current_state.shape)==3... ) with first dimension having only 1 element, while the rnn cell needs a state with 2 dims as input
             #TODO
