@@ -139,7 +139,7 @@ class RNN_onelayer_simplified(nn.Module):
             #TODO
             print(xTokens.shape)
             print(baseimgfeat.shape)
-            lvl0input = torch.cat((xTokens, baseimgfeat)) # what
+            lvl0input = torch.cat((xTokens, baseimgfeat), 1) # what
             #note that      current_state has 3 dims ( ...len(current_state.shape)==3... ) with first dimension having only 1 element, while the rnn cell needs a state with 2 dims as input
             #TODO
             updatedstate[0,:] = self.cells[0](lvl0input, current_state)  #RNN cell is used here #uses lvl0input and the hiddenstate
