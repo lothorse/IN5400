@@ -137,7 +137,10 @@ class RNN_onelayer_simplified(nn.Module):
             # and input at each layer the correct input ,
             # the input at higher layers will be the hidden state from the layer below
             #TODO
-            lvl0input = torch.cat((xTokens, baseimgfeat), 1).cpu() # what
+            lvl0input = torch.cat((xTokens, baseimgfeat), 1) # what
+            print(lvl0input.shape)
+            lvl0input = lvl0input.cpu()
+            print(lvl0input.shape)
             #note that      current_state has 3 dims ( ...len(current_state.shape)==3... ) with first dimension having only 1 element, while the rnn cell needs a state with 2 dims as input
             #TODO
             updatedstate[0,:] = self.cells[0](lvl0input, current_state)  #RNN cell is used here #uses lvl0input and the hiddenstate
