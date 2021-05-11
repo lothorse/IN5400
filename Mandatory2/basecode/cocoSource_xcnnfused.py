@@ -131,13 +131,14 @@ class RNN_onelayer_simplified(nn.Module):
         current_state = initial_hidden_state
         for kk in range(seqLen):
             updatedstate = torch.zeros_like(current_state)
+            print(updatedstate.shape)
 
             # this is for a one-layer RNN
             # in a 2 layer rnn you have to iterate here through the 2 layers
             # and input at each layer the correct input ,
             # the input at higher layers will be the hidden state from the layer below
             #TODO
-            lvl0input = torch.cat((baseimgfeat, xTokens), 0) # what
+            lvl0input = torch.cat((baseimgfeat, xTokens), 1) # what
             print(lvl0input.shape)
             lvl0input = lvl0input.cpu()
             print(lvl0input.shape)
