@@ -196,7 +196,7 @@ class RNN(nn.Module):
 
        #TODO
         # Your task is to create a list (self.cells) of type "nn.ModuleList" and populated it with cells of type "self.cell_type" - depending on the number of rnn layers
-        print("RNN hidden state size:", self.hidden_state_size)
+        #print("RNN hidden state size:", self.hidden_state_size)
         self.cells = nn.ModuleList()
         for insiz in input_size_list:
             self.cells.append(GRUCell(self.hidden_state_size, insiz))
@@ -251,7 +251,7 @@ class RNN(nn.Module):
                 updatedstate[i,:] = self.cells[i](lvl0input, torch.squeeze(current_state))[i,:]
             # if you are at the last layer, then produce logitskk, tokens , run a             logits_series.append(logitskk), see the simplified rnn for the one layer version
 
-            logitskk = outputLayer(updatedstate[len(self.cells),:])
+            logitskk = outputLayer(updatedstate[len(self.cells)-1,:])
 
             tokens = torch.argmax(logitskk, dim=1)
             logits_series.append(logitskk)
@@ -323,15 +323,10 @@ class GRUCell(nn.Module):
         # TODO:
         concatenated_input = torch.cat((state_old, x), 1)
         q = nn.Sigmoid()
-        print(self.hidden_state_sizes)
-        print(state_old.shape)
-        print(state_old.shape)
-        print(torch.mm(concatenated_input,self.weight).shape)
 
         gate_reset = q(torch.mm(concatenated_input,self.weight_r)+self.bias_r)
         r = torch.tanh(gate_reset*torch.mm(concatenated_input, self.weight)+self.bias)
         gate_update = q(torch.mm(concatenated_input,self.weight_u)+self.bias_u)
-        #print(gate_update.shape, state_old.shape, r.shape)
         u = gate_update*state_old
         state_new = r*(-gate_update+1)+u
         return state_new
