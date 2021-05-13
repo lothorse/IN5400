@@ -321,6 +321,7 @@ class GRUCell(nn.Module):
 
         """
         # TODO:
+        print(state_old.shape, x.shape)
         concatenated_input = torch.cat((state_old, x), 1)
         q = nn.Sigmoid()
 
