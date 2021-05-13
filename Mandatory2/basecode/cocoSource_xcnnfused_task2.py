@@ -321,7 +321,8 @@ class GRUCell(nn.Module):
         """
         # TODO:
         concatenated_input = torch.cat((state_old, x), 1)
-        gate_reset = nn.Sigmoid(torch.mm(concatenated_input,self.weight_r)+self.bias_r)
+        gate_reset = torch.mm(concatenated_input,self.weight_r)+self.bias_r
+        gate_reset = nn.Sigmoid(gate_reset)
         r = torch.tanh(gate_reset*torch.mm(concatenated_input, self.weight)+self.bias)
         gate_update = nn.Sigmoid(torch.mm(concatenated_input,self.weight_u)+self.bias_u)
         u = gate_update*state_old
