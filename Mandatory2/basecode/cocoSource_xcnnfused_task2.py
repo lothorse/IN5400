@@ -199,7 +199,7 @@ class RNN(nn.Module):
         print("RNN hidden state size:", self.hidden_state_size)
         self.cells = nn.ModuleList()
         for insiz in input_size_list:
-            self.cells.append(GRUCell(insiz, hidden_state_size))
+            self.cells.append(GRUCell(self.hidden_state_size, insiz))
 
         return
 
