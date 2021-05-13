@@ -196,6 +196,7 @@ class RNN(nn.Module):
 
        #TODO
         # Your task is to create a list (self.cells) of type "nn.ModuleList" and populated it with cells of type "self.cell_type" - depending on the number of rnn layers
+        print("RNN hidden state size:", self.hidden_state_size)
         self.cells = nn.ModuleList()
         for insiz in input_size_list:
             self.cells.append(GRUCell(insiz, hidden_state_size))
