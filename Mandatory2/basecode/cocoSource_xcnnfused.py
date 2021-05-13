@@ -347,6 +347,7 @@ class RNNsimpleCell(nn.Module):
 
         """
         x2 = torch.cat((x, state_old), dim=1)
+        print(state_old.shape, x2.shape, torch.mm(x2, self.weight).shape, (torch.mm(x2, self.weight) + self.bias).shape)
         state_new = torch.tanh(torch.mm(x2, self.weight) + self.bias)
         return state_new
 
