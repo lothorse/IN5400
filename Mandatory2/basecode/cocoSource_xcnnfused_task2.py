@@ -298,13 +298,13 @@ class GRUCell(nn.Module):
         self.hidden_state_sizes = hidden_state_size
 
         # TODO:
-        self.weight_u = nn.Parameter(torch.randn((hidden_state_size+inputSize, hidden_state_size))/ np.sqrt(inputSize + hidden_state_size))
+        self.weight_u = nn.Parameter(torch.randn((hidden_state_size+input_size, hidden_state_size))/ np.sqrt(input_size + hidden_state_size))
         self.bias_u   = nn.Parameter(torch.zeros((1, hidden_state_size)))
 
-        self.weight_r = nn.Parameter(torch.randn((hidden_state_size+inputSize, hidden_state_size))/ np.sqrt(inputSize + hidden_state_size))
+        self.weight_r = nn.Parameter(torch.randn((hidden_state_size+input_size, hidden_state_size))/ np.sqrt(input_size + hidden_state_size))
         self.bias_r   = nn.Parameter(torch.zeros((1, hidden_state_size)))
 
-        self.weight = nn.Parameter(torch.randn((hidden_state_size+inputSize, hidden_state_size))/ np.sqrt(inputSize + hidden_state_size))
+        self.weight = nn.Parameter(torch.randn((hidden_state_size+input_size, hidden_state_size))/ np.sqrt(input_size + hidden_state_size))
         self.bias   = nn.Parameter(torch.zeros((1, hidden_state_size)))
 
         return
