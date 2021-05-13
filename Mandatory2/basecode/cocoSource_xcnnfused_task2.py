@@ -322,6 +322,7 @@ class GRUCell(nn.Module):
         # TODO:
         concatenated_input = torch.cat((state_old, x), 1)
         q = nn.Sigmoid()
+        print(state_old.shape)
         print(concatenated_input.shape)
         print(torch.mm(concatenated_input,self.weight_r).shape)
         gate_reset = q(torch.mm(concatenated_input,self.weight_r)+self.bias_r)
