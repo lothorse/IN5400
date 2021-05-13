@@ -322,6 +322,7 @@ class GRUCell(nn.Module):
         # TODO:
         concatenated_input = torch.cat((state_old, x), 1)
         q = nn.Sigmoid()
+        print(torch.mm(concatenated_input,self.weight_r).shape)
         gate_reset = q(torch.mm(concatenated_input,self.weight_r)+self.bias_r)
         r = torch.tanh(gate_reset*torch.mm(concatenated_input, self.weight)+self.bias)
         gate_update = q(torch.mm(concatenated_input,self.weight_u)+self.bias_u)
@@ -363,7 +364,6 @@ class RNNsimpleCell(nn.Module):
 
         Returns:
             state_new: The updated hidden state of the recurrent cell. Shape [batch_size, hidden_state_sizes]
-
         """
         x2 = torch.cat((x, state_old), dim=1)
         state_new = torch.tanh(torch.mm(x2, self.weight) + self.bias)
