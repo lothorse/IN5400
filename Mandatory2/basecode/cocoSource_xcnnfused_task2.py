@@ -331,7 +331,7 @@ class GRUCell(nn.Module):
         r = torch.tanh(gate_reset*torch.mm(concatenated_input, self.weight)+self.bias)
         gate_update = q(torch.mm(concatenated_input,self.weight_u)+self.bias_u)
         #print(gate_update.shape, state_old.shape, r.shape)
-        u = torch.mm(gate_update, state_old)
+        u = torch.mm(state_old, gate_update)
         state_new = r*(-gate_update+1)+u
         return state_new
 
