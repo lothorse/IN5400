@@ -419,7 +419,7 @@ class LSTMCell(nn.Module):
 
         q = nn.Sigmoid()
 
-        print(concatenated_input.shape)
+        print(concatenated_input.shape, self.weight_i.shape)
         gate_input = q(torch.mm(self.weight_i, concatenated_input)+self.bias_i)
         gate_forget = q(torch.mm(self.weight_f, concatenated_input)+self.bias_f)
         gate_output = q(torch.mm(self.weight_o, concatenated_input)+self.bias_o)
