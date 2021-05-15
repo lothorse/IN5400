@@ -415,7 +415,7 @@ class LSTMCell(nn.Module):
 
         """
         # TODO:
-        concatenated_input
+        concatenated_input = torch.cat((state_old, x), 1)
 
         q = torch.Sigmoid()
         gate_input = q(torch.mm(self.weight_i, concatenated_input)+self.bias_i)
