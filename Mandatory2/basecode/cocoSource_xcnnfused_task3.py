@@ -422,7 +422,7 @@ class LSTMCell(nn.Module):
         gate_forget = q(torch.mm(concatenated_input, self.weight_f)+self.bias_f)
         gate_output = q(torch.mm(concatenated_input, self.weight_o)+self.bias_o)
         gate_meminput = torch.tanh(torch.mm(concatenated_input, self.weight_meminput)+self.bias_meminput)
-        cell_state = gate_forget*concatenated_input+gate_input*gate_meminput
+        cell_state = gate_forget*state_old+gate_input*gate_meminput
         hiddenstate = gate_output*torch.tanh(cell_state)
 
         state_new     = hiddenstate
