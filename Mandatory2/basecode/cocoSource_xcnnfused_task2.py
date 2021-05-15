@@ -40,8 +40,8 @@ class imageCaptionModel(nn.Module):
         #TODO
         self.inputlayer = nn.Sequential(
             nn.Dropout(p=0.25),
-            torch.nn.Linear(self.number_of_cnn_features, self.nnmapsize),
-            torch.nn.LeakyReLU(),
+            nn.Linear(self.number_of_cnn_features, self.nnmapsize),
+            nn.LeakyReLU(),
         )
 
 
