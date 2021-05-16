@@ -84,7 +84,8 @@ class imageCaptionModel(nn.Module):
         # Remember that each rnn cell needs its own initial state.
 
         #print(cnn_features.shape)
-        cnn_features = torch.unsqueeze(cnn_features, 0)
+        cnn_features = cnn_features.permute(2,1,0)
+        cnn_features = torch.unsqueeze(cnn_features, 3)
         imgfeat_processed = self.inputlayer(cnn_features)
         m = nn.MaxPool2d((10,1))
         imgfeat_processed = m(imgfeat_processed)
