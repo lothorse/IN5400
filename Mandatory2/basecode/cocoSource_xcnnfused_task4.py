@@ -38,7 +38,6 @@ class imageCaptionModel(nn.Module):
         self.outputlayer = nn.Linear(self.hidden_state_sizes, self.vocabulary_size)
         self.nnmapsize = 512 # the output size for the image features after the processing via self.inputLayer
         #TODO
-        print(self.number_of_cnn_features)
         self.inputlayer = nn.Sequential(
             nn.Dropout(p=0.25),
             nn.Conv2d(self.number_of_cnn_features, self.nnmapsize, 1),
@@ -84,7 +83,7 @@ class imageCaptionModel(nn.Module):
         # Remember that each rnn cell needs its own initial state.
 
         #print(cnn_features.shape)
-
+        cnn_features = torch.unsqueeze(cnn_features)
         print(cnn_features.shape)
         imgfeat_processed = self.inputlayer(cnn_features)
         print(imgfeat_processed.shape)
