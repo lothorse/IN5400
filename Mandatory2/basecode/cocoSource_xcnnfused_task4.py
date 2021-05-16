@@ -206,7 +206,7 @@ class RNN(nn.Module):
         for i in range(num_rnn_layers):
             if i == num_rnn_layers-1:
                 input_size_list.append(10+self.hidden_state_size)
-            else if i == 0:
+            elif i == 0:
                 input_size_list.append(self.input_size)
             else:
                 input_size_list.append(self.hidden_state_size)
