@@ -195,7 +195,7 @@ class RNN(nn.Module):
 
         attention_weights_network = nn.Sequential(
             nn.Dropout(p=0.25),
-            nn.linear(self.hidden_state_size, 50),
+            nn.Linear(self.hidden_state_size, 50),
             nn.LeakyReLU(),
             nn.Linear(50,10),
             nn.Softmax(),
