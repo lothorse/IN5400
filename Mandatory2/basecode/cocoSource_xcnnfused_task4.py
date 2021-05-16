@@ -61,7 +61,7 @@ class imageCaptionModel(nn.Module):
           self.rnn = RNN_onelayer_simplified(input_size=self.embedding_size  + self.nnmapsize , hidden_state_size=self.hidden_state_sizes)
 
         else:
-          self.rnn = RNN(input_size=self.embedding_size  + self.nnmapsize , hidden_state_size=self.hidden_state_sizes, num_rnn_layers=self.num_rnn_layers, cell_type=self.cell_type)
+          self.rnn = RNN(input_size=self.embedding_size  + self.nnmapsize , hidden_state_size=self.hidden_state_sizes, last_layer_state_size = self.hidden_state_sizes+10, num_rnn_layers=self.num_rnn_layers, cell_type=self.cell_type)
 
 
         return
