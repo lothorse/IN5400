@@ -262,7 +262,7 @@ class RNN(nn.Module):
             # TODO
             # you need to:
             #create your lvl0input,
-            lvl0input = torch.cat((tokens_vector, torch.unsqueeze(baseimgfeat, 0)), 1)
+            lvl0input = torch.cat((tokens_vector, torch.squeeze(baseimgfeat)), 1)
             #update the hidden cell state for every layer with inputs depending on the layer index
             for i in range(len(self.cells)):
                 if i == len(self.cells)-1:
