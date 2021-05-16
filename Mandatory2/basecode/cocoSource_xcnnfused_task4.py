@@ -84,7 +84,7 @@ class imageCaptionModel(nn.Module):
 
         #print(cnn_features.shape)
 
-        print(cnn_features)
+        print(cnn_features.shape)
         imgfeat_processed = self.inputlayer(cnn_features)
         print(imgfeat_processed.shape)
         m = nn.MaxPool2d((10,1))
