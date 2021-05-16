@@ -191,7 +191,10 @@ class RNN(nn.Module):
         #TODO
         input_size_list = []
         for i in range(num_rnn_layers):
-            input_size_list.append(self.input_size)
+            if i == 0:
+                input_size_list.append(self.input_size)
+            else:
+                input_size_list.append(self.hidden_state_size)
         # input_size_list should have a length equal to the number of layers and input_size_list[i] should contain the input size for layer i
 
        #TODO
@@ -248,7 +251,10 @@ class RNN(nn.Module):
             lvl0input = torch.cat((tokens_vector, baseimgfeat), 1)
             #update the hidden cell state for every layer with inputs depending on the layer index
             for i in range(len(self.cells)):
-                updatedstate[i,:] = self.cells[i](lvl0input, torch.squeeze(current_state)[i,:])[i,:]
+                if i == 0:
+                    updatedstate[i,:] = self.cells[i](lvl0input, torch.squeeze(current_state)[i,:])[i,:]
+                else:
+                    updatedstate[i,:] = self.cells[i](torch.squeeze(current_state)[i-1,:], torch.squeeze(current_state)[i,:])[i,:]
             # if you are at the last layer, then produce logitskk, tokens , run a             logits_series.append(logitskk), see the simplified rnn for the one layer version
 
             logitskk = outputLayer(updatedstate[len(self.cells)-1,:])
