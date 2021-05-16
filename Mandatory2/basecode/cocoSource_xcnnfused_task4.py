@@ -85,7 +85,7 @@ class imageCaptionModel(nn.Module):
 
         #print(cnn_features.shape)
         print(cnn_features.shape)
-        cnn_features = torch.unsqueeze(cnn_features)
+        cnn_features = torch.unsqueeze(cnn_features, 1)
         imgfeat_processed = self.inputlayer(cnn_features)
         print(imgfeat_processed.shape)
         m = nn.MaxPool2d((10,1))
