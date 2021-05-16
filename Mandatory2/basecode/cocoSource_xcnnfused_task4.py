@@ -41,6 +41,7 @@ class imageCaptionModel(nn.Module):
         self.inputlayer = nn.Sequential(
             nn.Dropout(p=0.25),
             nn.Conv2d(self.number_of_cnn_features, self.nnmapsize, 1),
+            nn.Flatten(2,3),
             nn.BatchNorm1d(self.nnmapsize),
             nn.LeakyReLU(),
         )
@@ -84,6 +85,7 @@ class imageCaptionModel(nn.Module):
 
         #print(cnn_features.shape)
         print(cnn_features.shape)
+        torch.unsqueeze(cnn_features)
         imgfeat_processed = self.inputlayer(cnn_features)
         print(imgfeat_processed.shape)
         m = nn.MaxPool2d((10,1))
@@ -174,7 +176,7 @@ class RNN_onelayer_simplified(nn.Module):
 
 
 class RNN(nn.Module):
-    def __init__(self, input_size, hidden_state_size, num_rnn_layers, cell_type='GRU'):
+    def __init__(self, input_size, hidden_state_size, num_rnn_layers, last_layer_state_size, cell_type='GRU'):
         super(RNN, self).__init__()
         """
         Args:
@@ -191,11 +193,24 @@ class RNN(nn.Module):
         self.num_rnn_layers    = num_rnn_layers
         self.cell_type         = cell_type
 
+        attention_weights_network = nn.Sequential(
+            nn.Dropout(p=0.25),
+            nn.linear(self.hidden_state_size, 50),
+            nn.LeakyReLU(),
+            nn.Linear(50,10),
+            nn.Softmax(),
+            )
 
         #TODO
         input_size_list = []
         for i in range(num_rnn_layers):
-            input_size_list.append(self.input_size)
+            if i == num_rnn_layers-1:
+                input_size_list.append(10+self.hidden_state_size)
+            else if i == 0:
+                input_size_list.append(self.input_size)
+            else:
+                input_size_list.append(self.hidden_state_size)
+
         # input_size_list should have a length equal to the number of layers and input_size_list[i] should contain the input size for layer i
 
        #TODO
@@ -208,7 +223,7 @@ class RNN(nn.Module):
         return
 
 
-    def forward(self, xTokens, baseimgfeat, initial_hidden_state, outputLayer, Embedding, is_train=True):
+    def forward(self, xTokens, baseimgfeat, initial_hidden_state, outputLayer, Embedding, attention_weights_network, is_train=True):
         """
         Args:
             xTokens:        shape [batch_size, truncated_backprop_length]
@@ -252,7 +267,13 @@ class RNN(nn.Module):
             lvl0input = torch.cat((tokens_vector, baseimgfeat), 1)
             #update the hidden cell state for every layer with inputs depending on the layer index
             for i in range(len(self.cells)):
-                updatedstate[i,:] = self.cells[i](lvl0input, torch.squeeze(current_state)[i,:])[i,:]
+                if i == len(self.cells)-1:
+                    attention_weights = attention_weights_network(torch.squeeze(updatedstate)[i-1,:])
+                    updatedstate[i,:] = self.cells[i](torch.cat(torch.squeeze(updatedstate)[i-1,:], torch.mm(lvl0input, attention_weights)), torch.squeeze(current_state)[i,:])
+                else if i == 0:
+                    updatedstate[i,:] = self.cells[i](lvl0input, torch.squeeze(current_state)[i,:])[i,:]
+                else:
+                    updatedstate[i,:] = self.cells[i](torch.squeeze(updatedstate)[i-1,:], torch.squeeze(current_state)[i,:])[i,:]
             # if you are at the last layer, then produce logitskk, tokens , run a             logits_series.append(logitskk), see the simplified rnn for the one layer version
 
             logitskk = outputLayer(updatedstate[len(self.cells)-1,:])
