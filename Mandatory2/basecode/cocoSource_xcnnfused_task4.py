@@ -40,7 +40,7 @@ class imageCaptionModel(nn.Module):
         #TODO
         self.inputlayer = nn.Sequential(
             nn.Dropout(p=0.25),
-            nn.Conv2d(self.number_of_cnn_features, self.nnmapsize, 1),
+            nn.Conv2d(128, self.nnmapsize, 1),
             nn.BatchNorm1d(self.nnmapsize),
             nn.LeakyReLU(),
         )
