@@ -84,13 +84,10 @@ class imageCaptionModel(nn.Module):
         # Remember that each rnn cell needs its own initial state.
 
         #print(cnn_features.shape)
-        print(cnn_features.shape)
-        cnn_features = torch.unsqueeze(cnn_features, 1)
+        cnn_features = torch.unsqueeze(cnn_features, 0)
         imgfeat_processed = self.inputlayer(cnn_features)
-        print(imgfeat_processed.shape)
         m = nn.MaxPool2d((10,1))
         imgfeat_processed = m(imgfeat_processed)
-        print(imgfeat_processed.shape)
 
         if current_hidden_state is None:
             initial_hidden_state = torch.zeros(self.num_rnn_layers, xTokens.shape[0], self.hidden_state_sizes, device="cuda")
