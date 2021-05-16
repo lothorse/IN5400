@@ -38,6 +38,7 @@ class imageCaptionModel(nn.Module):
         self.outputlayer = nn.Linear(self.hidden_state_sizes, self.vocabulary_size)
         self.nnmapsize = 512 # the output size for the image features after the processing via self.inputLayer
         #TODO
+        print(seld.number_of_cnn_features)
         self.inputlayer = nn.Sequential(
             nn.Dropout(p=0.25),
             nn.Conv2d(self.number_of_cnn_features, self.nnmapsize, 1),
