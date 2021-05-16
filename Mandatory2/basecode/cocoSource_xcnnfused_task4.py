@@ -270,7 +270,7 @@ class RNN(nn.Module):
                 if i == len(self.cells)-1:
                     attention_weights = attention_weights_network(torch.squeeze(updatedstate)[i-1,:])
                     updatedstate[i,:] = self.cells[i](torch.cat(torch.squeeze(updatedstate)[i-1,:], torch.mm(lvl0input, attention_weights)), torch.squeeze(current_state)[i,:])
-                else if i == 0:
+                elif i == 0:
                     updatedstate[i,:] = self.cells[i](lvl0input, torch.squeeze(current_state)[i,:])[i,:]
                 else:
                     updatedstate[i,:] = self.cells[i](torch.squeeze(updatedstate)[i-1,:], torch.squeeze(current_state)[i,:])[i,:]
