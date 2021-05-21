@@ -44,7 +44,7 @@ if __name__ == '__main__':
         'cuda': {'use_cuda': True,  # Use_cuda=True: use GPU
                  'device_idx': 0},  # Select gpu index: 0,1,2,3
         'numbOfCPUThreadsUsed': 10,  # Number of cpu threads use in the dataloader
-        'numbOfEpochs': 45,  # Number of epochs
+        'numbOfEpochs': 99,  # Number of epochs
         'data_dir': data_dir,  # data directory
         'img_dir': 'loss_images_test/',
         'modelsDir': 'storedModels_test/',
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         'restoreModelBest': 0,
         'modeSetups': [['train', True], ['val', True]],
         'inNotebook': False,  # If running script in jupyter notebook
-        'inference': True
+        'inference': False
     }
 
     config = {
