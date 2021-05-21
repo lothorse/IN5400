@@ -191,7 +191,11 @@ class RNN(nn.Module):
         #TODO
         input_size_list = []
         for i in range(num_rnn_layers):
-            input_size_list.append(self.input_size)
+            if i == 0:
+                input_size_list.append(self.input_size)
+            else:
+                input_size_list.append(self.hidden_state_size)
+                print(self.hidden_state_size)
         # input_size_list should have a length equal to the number of layers and input_size_list[i] should contain the input size for layer i
 
        #TODO
